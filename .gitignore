@@ -1,0 +1,13 @@
+# Windows system files
+AppData/
+NTUSER.DAT*
+Thumbs.db
+desktop.ini
+
+# Editor settings
+.vscode/
+*.log
+*.tmp
+
+# Virtual machines
+.VirtualBox/
