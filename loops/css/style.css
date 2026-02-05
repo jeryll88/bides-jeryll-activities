@@ -1,0 +1,69 @@
+
+    body {
+      font-family: Consolas, "Courier New", monospace;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #161b22;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1f9d29;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #8b949e;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 8px;
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    button:hover {
+      background: #30363d;
+    }
+
+    .clear-btn {
+      background: #2f0f14;
+      border-color: #8b1e2d;
+      color: #ff7b72;
+    }
+
+    pre {
+      background: #010409;
+      border: 1px solid #30363d;
+      padding: 12px;
+      border-radius: 4px;
+      min-height: 150px;
+      overflow-x: auto;
+    }
+
+    .prompt {
+      color: #7ee787;
+    }
