@@ -76,4 +76,3 @@ function searchStudent() {
 }
 renderTable(students);
 
-searchInput.addEventListener('input', searchStudent);

@@ -1,0 +1,53 @@
+
+    body {
+        background: #f0f8e8; /* light matcha background */
+        color: #2e4b1e;      /* dark green text */
+        font-family: Arial, sans-serif;
+        padding: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+    }
+
+    th, td {
+        border: 1px solid #c7ea46; /* soft matcha border */
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background: #9acd32; /* main matcha green */
+        color: #1f2f0a;      /* dark text for contrast */
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background: #f7fde9; /* subtle row striping */
+    }
+
+    tr:hover {
+        background: #e6f5b0; /* hover highlight */
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 14px;
+        background: #6b8e23; /* darker matcha */
+        color: #f0f8e8;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #9acd32; /* lighter matcha on hover */
+        color: #1f2f0a;
+    }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/login.css">
+   
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Login</h2>
+
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button onclick="login()">Login</button>
+
+    <p class="error" id="errorMsg"></p>
+</div>
+
+<script>
+async function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    errorMsg.textContent = ""; // clear previous error
+
+    if (!username || !password) {
+        errorMsg.textContent = "Please enter username and password";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost/api/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Invalid username or password");
+        }
+
+        // Login successful → store auth in sessionStorage
+        sessionStorage.setItem("auth", "true");
+
+        // Redirect to student list page
+        window.location.href = "students.html";
+
+    } catch (err) {
+        errorMsg.textContent = err.message;
+    }
+}
+</script>
+
+</body>
+</html>
