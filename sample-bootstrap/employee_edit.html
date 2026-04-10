@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Edit Employee | Employee Information System</title>
 <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/global.css">
 <link rel="stylesheet" href="./css/info.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="./js/activity_logger.js"></script>
@@ -49,50 +50,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const empId = urlParams.get('id');
-
-    let employees = JSON.parse(localStorage.getItem('employees')) || [];
-    const employee = employees.find(e => e.id == empId);
-
-    if(employee){
-        document.getElementById('empId').value = employee.id;
-        document.getElementById('firstName').value = employee.firstName;
-        document.getElementById('lastName').value = employee.lastName;
-        document.getElementById('birthday').value = employee.birthday;
-        document.getElementById('status').value = employee.status;
-    } else {
-        alert("Employee not found!");
-        window.location.href = "employee_list.html";
-    }
-
-    const form = document.getElementById('editEmployeeForm');
-
-    form.addEventListener('submit', function(e){
-        e.preventDefault();
-
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName = document.getElementById('lastName').value.trim();
-        const birthday = document.getElementById('birthday').value;
-        const status = document.getElementById('status').value;
-
-        if(!firstName || !lastName || !birthday || !status) return;
-
-        // Update the employee object
-        const index = employees.findIndex(e => e.id == empId);
-        if(index !== -1){
-            employees[index].firstName = firstName;
-            employees[index].lastName = lastName;
-            employees[index].birthday = birthday;
-            employees[index].status = status;
-
-            localStorage.setItem('employees', JSON.stringify(employees));
-            alert("Employee updated successfully!");
-            logActivity("Edited Employee", employee.firstName + " " + employee.lastName);
-            window.location.href = "employee_list.html";
-        }
-    });
-</script>
+<script src="./js/employee_edit.js"></script>
 </body>
 </html>

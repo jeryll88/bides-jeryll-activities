@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --primary-blue: #0d6efd;
+    --heading-font: 'Outfit', sans-serif;
+    --body-font: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--body-font);
+}
+
+h1, h2, h3, h4, h5, h6, 
+.system-title, 
+.top-header,
+.card-title {
+    font-family: var(--heading-font) !important;
+    color: var(--primary-blue) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Ensure consistent text shadow for headers if they had any */
+.top-header, .system-title {
+    text-shadow: none !important;
+}
+
+/* Update nav boxes to the new heading font for a more formal look */
+.nav-box {
+    font-family: var(--heading-font);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+}

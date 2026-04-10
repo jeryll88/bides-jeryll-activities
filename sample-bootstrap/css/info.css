@@ -1,7 +1,6 @@
 /* Body & background */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #0a192f, #112240);
     color: white;
     overflow-x: hidden;
@@ -29,8 +28,6 @@ body::before {
     font-size: 32px;
     font-weight: 700;
     letter-spacing: 1px;
-    color: #0d6efd;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
     position: relative;
     z-index: 1;
 }
@@ -68,10 +65,6 @@ body::before {
 .system-title {
     font-size: 32px;
     font-weight: 700;
-    background: linear-gradient(90deg, #0d6efd, #3b82f6);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
 }
 
 /* Sidebar buttons inside card */
