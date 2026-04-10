@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Training | Employee Information System</title>
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="./css/trainings.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="info-card w-50 mx-auto">
+        <h2 class="system-title text-center mb-4">EDIT TRAINING</h2>
+        <form id="editTrainingForm">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" required>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Changes</button>
+            <a href="trainings.html" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i> Cancel</a>
+        </form>
+    </div>
+</div>
+
+<script>
+// Get training ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const trainingId = urlParams.get('id'); // keep as string for safer comparison
+
+// Load trainings from localStorage
+let trainings = JSON.parse(localStorage.getItem('trainings')) || [];
+
+// Find the training to edit (works for string or number IDs)
+const training = trainings.find(t => t.id == trainingId);
+
+if(training){
+    // Pre-fill the form inputs with current training info
+    document.getElementById('title').value = training.title;
+    document.getElementById('date').value = training.date;
+}
+
+const form = document.getElementById('editTrainingForm');
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const date = document.getElementById('date').value;
+
+    if(!title || !date) return;
+
+    if(training){
+        // Update training data
+        training.title = title;
+        training.date = date;
+
+        // Save back to localStorage
+        localStorage.setItem('trainings', JSON.stringify(trainings));
+    }
+
+    // Optionally, you can show a simple success message
+    // alert("Training updated successfully!");
+
+    // Redirect back to trainings list
+    window.location.href = "trainings.html";
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

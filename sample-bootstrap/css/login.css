@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #0a192f, #112240);
+}
+
+/* Background employee image with blur */
+body::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('employee.png') no-repeat center center;
+    background-size: cover;
+    filter: blur(10px) brightness(0.4); /* blurred and darkened */
+    z-index: 0;
+}
+
+/* Subtle IT grid overlay on top of the background image */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+}
+
+/* Login box above the background layers */
+.login-box {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    color: white;
+}
+
+/* Rest of your styles remain the same */
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    background-color: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+}
+
+.form-control::placeholder {
+    color: #cbd5e1;
+}
+
+.form-control:focus {
+    background-color: rgba(255,255,255,0.15);
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.4);
+    color: white;
+}
+
+.btn-enterprise {
+    background: rgba(13,110,253,0.3);
+    border: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.btn-enterprise:hover {
+    background: #2563eb;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.secure-text {
+    text-align: center;
+    font-size: 13px;
+    color: #9ca3af;
+    margin-top: 20px;
+}

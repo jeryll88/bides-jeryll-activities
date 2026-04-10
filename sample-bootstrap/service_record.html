@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Service Records</title>
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="./css/service.css">
+
+</head>
+<body>
+
+<div class="top-header">
+EMPLOYEE INFORMATION SYSTEM
+</div>
+
+<div class="container-fluid mt-4">
+
+<div class="info-card">
+
+<h2 class="system-title text-center mb-4">
+SERVICE RECORDS
+</h2>
+
+<!-- Back + Add Buttons -->
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+
+<button class="btn btn-secondary" onclick="goBack()">
+<i class="fa-solid fa-arrow-left"></i> Back
+</button>
+
+<button class="btn add-btn" onclick="addService()">
+<i class="fa-solid fa-plus"></i> Add
+</button>
+
+</div>
+
+<div class="table-responsive">
+<table class="table-custom text-center align-middle" id="serviceTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Position</th>
+<th>Start</th>
+<th>End</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+</div>
+
+</div>
+</div>
+
+<script>
+
+const employee = JSON.parse(localStorage.getItem("currentEmployee"));
+let services = JSON.parse(localStorage.getItem("services")) || [];
+const tableBody = document.querySelector("#serviceTable tbody");
+
+// Render service records for current employee
+function renderServices() {
+    tableBody.innerHTML = "";
+
+    // Filter services for this employee
+    const empServices = services.filter(s => s.id === employee.id);
+
+    if(empServices.length === 0){
+        tableBody.innerHTML = `<tr><td colspan="5">No service records yet</td></tr>`;
+        return;
+    }
+
+    empServices.forEach((s, index) => {
+        tableBody.innerHTML += `
+        <tr>
+            <td>${s.id}</td>
+            <td>${s.position}</td>
+            <td>${s.start}</td>
+            <td>${s.end}</td>
+            <td>
+                <button class="btn btn-sm btn-warning mb-1" onclick="editService(${index})">
+                    <i class="fa-solid fa-pen"></i> Edit
+                </button>
+                <button class="btn btn-sm btn-danger mb-1" onclick="deleteService(${index})">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+// Go to add_service.html
+function addService() {
+    window.location.href = "add_service.html";
+}
+
+// Delete a service
+function deleteService(index){
+    if(confirm("Delete this service record?")){
+        services = services.filter((_, i) => i !== index);
+        localStorage.setItem("services", JSON.stringify(services));
+        renderServices();
+    }
+}
+
+// Edit a service
+function editService(index){
+    // Store index to localStorage so add_service can edit
+    localStorage.setItem("editServiceIndex", index);
+    window.location.href = "edit_service.html";
+}
+
+// Back to employee info
+function goBack(){
+    window.location.href = `employee_info.html?id=${employee.id}`;
+}
+
+// Initial render
+renderServices();
+
+</script>
+
+<script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

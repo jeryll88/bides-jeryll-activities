@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee List | Employee Information System</title>
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/list.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="./js/activity_logger.js"></script>
+
+<style>
+/* Status Colors */
+.status-active { color: #22c55e; font-weight: 600; }
+.status-permanent { color: #3b82f6; font-weight: 600; }
+.status-temporary { color: #f59e0b; font-weight: 600; }
+.status-separated { color: #ef4444; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="content container-fluid">
+
+    <!-- Header -->
+    <div class="top-header mb-4">Employee Information System</div>
+
+    <!-- Navigation Boxes -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-2">
+            <div class="nav-box" onclick="goToDashboard()">DASHBOARD</div>
+        </div>
+        <div class="col-md-2">
+            <div class="nav-box nav-active">EMPLOYEES</div>
+        </div>
+    </div>
+
+    <!-- Search Bar + Add Button -->
+    <div class="d-flex mb-4">
+        <input type="text" class="form-control me-2" placeholder="Search employees..." id="searchInput">
+        <a href="employee_add.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> ADD</a>
+    </div>
+
+    <!-- Employee Table -->
+    <div class="glass-card">
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>EMPLOYEE ID</th>
+                        <th>LAST NAME</th>
+                        <th>FIRST NAME</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Employee rows will be dynamically inserted -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+<script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const tbody = document.getElementById('employeeTableBody');
+
+// Load employees from localStorage
+let employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+// Render employees
+function renderEmployees(list = employees) {
+    tbody.innerHTML = '';
+    if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5">No employees found</td></tr>';
+        return;
+    }
+
+    list.forEach(emp => {
+        let statusClass = '';
+        switch(emp.status.toLowerCase()) {
+            case 'active': statusClass='status-active'; break;
+            case 'permanent': statusClass='status-permanent'; break;
+            case 'temporary': statusClass='status-temporary'; break;
+            case 'separated': statusClass='status-separated'; break;
+        }
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${emp.id}</td>
+                <td>${emp.lastName}</td>
+                <td>${emp.firstName}</td>
+                <td class="${statusClass}">${emp.status}</td>
+                <td>
+                    <a href="employee_info.html?id=${emp.id}" class="btn btn-sm btn-info mb-1"><i class="fa-solid fa-eye"></i> View</a>
+                    <a href="employee_edit.html?id=${emp.id}" class="btn btn-sm btn-warning mb-1"><i class="fa-solid fa-pen"></i> Edit</a>
+                    <button class="btn btn-sm btn-danger" onclick="deleteEmployee('${emp.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Delete employee
+function deleteEmployee(id) {
+    const emp = employees.find(e => e.id === id);
+    if(!emp) return;
+
+    if(confirm(`Are you sure you want to delete ${emp.firstName} ${emp.lastName}?`)) {
+        employees = employees.filter(e => e.id !== id);
+        localStorage.setItem('employees', JSON.stringify(employees));
+        renderEmployees();
+
+        // Log activity
+        if(typeof logActivity === "function") {
+            logActivity("Deleted Employee", `${emp.firstName} ${emp.lastName}`);
+        }
+    }
+}
+
+// Go to dashboard
+function goToDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function() {
+    const search = this.value.toLowerCase();
+    const filtered = employees.filter(emp => 
+        emp.firstName.toLowerCase().includes(search) || 
+        emp.lastName.toLowerCase().includes(search) || 
+        emp.status.toLowerCase().includes(search) ||
+        emp.id.toLowerCase().includes(search)
+    );
+    renderEmployees(filtered);
+});
+
+// Initial render
+renderEmployees();
+</script>
+
+</body>
+</html>

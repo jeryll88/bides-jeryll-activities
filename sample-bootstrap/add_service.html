@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Service Record</title>
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/add_service.css"> <!-- Reuse same CSS -->
+
+</head>
+<body>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:100vh;">
+
+    <div class="info-card" style="width:100%; max-width:500px;">
+        <h3 class="system-title">Add Service Record</h3>
+
+        <div class="mb-3">
+            <label>Position</label>
+            <input type="text" id="position" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Start Date</label>
+            <input type="date" id="start" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>End Date</label>
+            <input type="date" id="end" class="form-control">
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-success" onclick="saveService()">Save</button>
+            <button class="btn btn-secondary" onclick="goBack()">Cancel</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const employee = JSON.parse(localStorage.getItem("currentEmployee"));
+
+// Go back to previous page
+function goBack(){
+    window.history.back();
+}
+
+// Save new service record
+function saveService(){
+
+    const position = document.getElementById("position").value;
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+
+    if(!position || !start || !end){
+        alert("Please complete the form");
+        return;
+    }
+
+    // Get existing services or empty array
+    let services = JSON.parse(localStorage.getItem("services")) || [];
+
+    // Create new service record linked to current employee
+    const newService = {
+        id: employee.id,   // same as employee ID
+        position: position,
+        start: start,
+        end: end
+    };
+
+    // Add to array
+    services.push(newService);
+
+    // Save to localStorage
+    localStorage.setItem("services", JSON.stringify(services));
+
+    alert("Service Record Added");
+
+    // Redirect to service records page
+    window.location.href = "service_record.html";
+}
+</script>
+
+<script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

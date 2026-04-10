@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Employee | Employee Information System</title>
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/info.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="./js/activity_logger.js"></script>
+
+</head>
+<body>
+<div class="content container-fluid">
+    <div class="top-header mb-4">Employee Information System</div>
+
+    <div class="info-card">
+        <h2 class="system-title text-center">ADD EMPLOYEE</h2>
+
+        <form id="addEmployeeForm">
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Birthday</label>
+                <input type="date" class="form-control" id="birthday" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="status" required>
+                    <option value="">Select status</option>
+                    <option>Active</option>
+                    <option>Permanent</option>
+                    <option>Temporary</option>
+                    <option>Separated</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Add Employee
+            </button>
+
+            <a href="employee_list.html" class="btn btn-secondary">
+                <i class="fa-solid fa-xmark"></i> Cancel
+            </a>
+
+        </form>
+    </div>
+</div>
+
+<script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const form = document.getElementById("addEmployeeForm");
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const birthday = document.getElementById("birthday").value;
+    const status = document.getElementById("status").value;
+
+    if(!firstName || !lastName || !birthday || !status){
+        alert("Please fill all fields");
+        return;
+    }
+
+    let employees = JSON.parse(localStorage.getItem("employees")) || [];
+
+    // ==================== GENERATE EMPLOYEE ID ====================
+    function generateEmployeeID() {
+        let total = employees.length + 1;
+        let group = Math.ceil(total / 10);
+        let position = total % 10;
+        if (position === 0) position = 10;
+        let groupFormatted = String(group).padStart(3,'0');
+        let positionFormatted = String(position).padStart(2,'0');
+        return `E${groupFormatted}-${positionFormatted}`;
+    }
+
+    const newEmployee = {
+        id: generateEmployeeID(),
+        firstName: firstName,
+        lastName: lastName,
+        birthday: birthday,
+        status: status
+    };
+
+    employees.push(newEmployee);
+    localStorage.setItem("employees", JSON.stringify(employees));
+
+    // Log activity
+    if(typeof logActivity === "function"){
+        logActivity("Added Employee", `${firstName} ${lastName}`);
+    }
+
+    alert("Employee added successfully!");
+    window.location.href = "employee_list.html";
+});
+</script>
+
+</body>
+</html>
